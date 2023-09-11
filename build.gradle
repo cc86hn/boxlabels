@@ -1,0 +1,34 @@
+defaultTasks 'distZip'
+
+apply plugin: 'java-library'
+apply plugin: 'application'
+
+
+sourceCompatibility = 1.11
+version = 'SNAPSHOT'
+mainClassName = 'org.cc86.boxlabels.EntryPoint'
+
+
+jar{
+	manifest{
+		attributes 'Implementation-Title': 'Boxlabel-Server',
+					'Implementation-Version': 'SNAPSHOT',
+					'Main-Class': 'org.cc86.boxlabels.EntryPoint'
+					
+	}
+}
+
+repositories{
+	mavenCentral()
+}
+
+dependencies{
+    api "org.yaml:snakeyaml:1.14"
+    api("com.google.guava:guava:31.0.1-jre")
+	api( 'info.picocli:picocli:4.6.2')
+	api group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.+'
+	api group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.+'
+	api group: 'org.apache.logging.log4j', name: 'log4j-iostreams', version: '2.+'
+	api group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.+'
+	api group: 'org.apache.logging.log4j', name: 'log4j-jul', version: '2.+'
+}
