@@ -38,10 +38,11 @@ public class EntryPoint
         {
             if (checkAndInitializeLabelFolder())
             {
-                int i=0;
+                //int i=0;
                 File[] labels = new File(CONFIG.getLabelfolder()).listFiles();
-                for (File label : labels)
+                for (int i=0;i<labels.length;i++)
                 {
+                    File label = labels [i];
                     l.info("processing Label cnt"+i);
                     i++;
                     l.info("Proc:" + label);
@@ -55,7 +56,7 @@ public class EntryPoint
                     }
                     try
                     {
-                        processLabel((LabelContent) y.load(new FileReader(label.getPath())));
+                        processLabel((LabelContent) y.load(new FileReader(label.getPath())),(i==label.length()-1));
                     } catch (FileNotFoundException e)
                     {
                         throw new RuntimeException(e);
@@ -77,7 +78,7 @@ public class EntryPoint
         }
     }
     
-    public static void processLabel(LabelContent c)
+    public static void processLabel(LabelContent c,boolean isLast)
     {
         if(state.getOrDefault(c.getBoxId()+"","x").equals(c.hashCode()+""))
         {
@@ -107,7 +108,10 @@ public class EntryPoint
             l.info("curled up");
             try
             {
-                Thread.sleep(50000);
+                if(!isLast)
+                {
+                    Thread.sleep(50000);
+                }
             } catch (InterruptedException e)
             {
                 throw new RuntimeException(e);
